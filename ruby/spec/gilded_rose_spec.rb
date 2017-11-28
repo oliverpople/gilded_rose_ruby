@@ -10,6 +10,12 @@ describe GildedRose do
     end
   end
 
+    it 'doubles the rate of quality degradation once an item\'s sell by date is less than 0' do
+      items = [Item.new("foo", 0, 2)]
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq(0)
+    end
+
 end
 
 
