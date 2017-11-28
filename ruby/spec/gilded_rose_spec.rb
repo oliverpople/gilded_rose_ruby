@@ -39,6 +39,12 @@ describe GildedRose do
       expect(items[0].quality).to eq(50)
     end
 
+    it 'increases the quality value of backstages passes by x2 when there are 10days of less to sellin ' do
+      items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 10, 0)]
+      GildedRose.new(items).update_quality
+      expect(items[0].quality).to eq(2)
+    end
+
   end
 end
 
@@ -50,7 +56,8 @@ end
 # - The Quality of an item is never more than 50 /
 # - “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality /
 # - “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches;
-# Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
+#   Quality increases by 2 when there are 10 days or less and by 3 when there
+#   are 5 days or less but Quality drops to 0 after the concert
 #
 # - “Conjured” items degrade in Quality twice as fast as normal items
 #
