@@ -14,16 +14,17 @@ class GildedRose
         end
       else # if the item is a Aged brie or a backstage pass...
         if item.quality < 50 # and it' QV is less than 50
-          item.quality = item.quality + 1 # the item's quality is raises by +1..
+add_quality(item)
           if item.name == "Backstage passes to a TAFKAL80ETC concert" #...if this item is a backstage pass...
             if item.sell_in < 11 #...with less tha 11 days left to sell...
               if item.quality < 50 #...and the items QV is still less than 50...
-                item.quality = item.quality + 1 #...it's QV increases by +1
+add_quality(item)
+
               end
             end
             if item.sell_in < 6 # ...but if the item has 6 days to sell...
               if item.quality < 50 #...and it's QV is less than 50...
-                item.quality = item.quality + 1  #...it's QV increase by +1
+  add_quality(item)
               end
             end
           end
@@ -45,12 +46,16 @@ class GildedRose
           end
         else # ...if the item is aged brie
           if item.quality < 50 #...and the QV is less than 50...
-            item.quality = item.quality + 1 #...its QV increases by +1
+      add_quality(item)
           end
         end
       end
     end
   end
+end
+
+def add_quality(item)
+  item.quality = item.quality + 1
 end
 
 class Item
