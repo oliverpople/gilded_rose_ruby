@@ -8,13 +8,22 @@ describe GildedRose do
       GildedRose.new(items).update_quality()
       expect(items[0].name).to eq "foo"
     end
-  end
 
-    it 'doubles the rate of quality degradation once an item\'s sell by date is less than 0' do
+    it 'doubles the rate of quality degradation once a standard item passes its sell by date' do
       items = [Item.new("foo", 0, 2)]
       GildedRose.new(items).update_quality()
       expect(items[0].quality).to eq(0)
     end
+
+    it 'doesn\'t allow standard items to have negative quality values' do
+      items = [Item.new("foo", 0, 0)]
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq(0)
+    end
+
+
+
+end
 
 end
 
@@ -23,8 +32,8 @@ end
 =begin
 # Requirements to test
 
-- Once the sell by date has passed, Quality degrades twice as fast
-- The Quality of an item is never negative
+- Once the sell by date has passed, Quality degrades twice as fast  /
+- The Quality of an item is never negative  /
 - “Aged Brie” actually increases in Quality the older it gets
 - The Quality of an item is never more than 50
 - “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
