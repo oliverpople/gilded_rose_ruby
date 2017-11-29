@@ -2,7 +2,6 @@ require  './gilded_rose.rb'
 
 describe GildedRose do
   describe '#update_quality' do
-
     it 'does not change the name' do
       items = [Item.new('foo', 0, 0)]
       GildedRose.new(items).update_quality
@@ -10,7 +9,7 @@ describe GildedRose do
     end
 
     it 'doubles the rate of quality degradation once a standard item passes its sell by date' do
-      items = [Item.new('foo', 0, 2)]
+      items = [Item.new('foo', 0, 4)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(0)
     end
@@ -19,6 +18,12 @@ describe GildedRose do
       items = [Item.new('foo', 0, 0)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(0)
+    end
+
+    it 'degrades the quality value of standard items by 2' do
+      items = [Item.new('foo', 1, 10)]
+      GildedRose.new(items).update_quality
+      expect(items[0].quality).to eq(8)
     end
 
     it 'increases the quality of aged brie the older it gets' do
@@ -33,8 +38,8 @@ describe GildedRose do
       expect(items[0].quality).to eq(50)
     end
 
-    it 'never decreases the Quality Sulfuras, Hand of Ragnaros' do
-      items = [Item.new('Sulfuras, Hand of Ragnaros', 0, 50)]
+    it 'increases the quality value of Aged Brie by +2, if it has a quality value less than 50 and a sellin less than 0' do
+      items = [Item.new('Aged Brie', 0, 48)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(50)
     end
@@ -52,22 +57,17 @@ describe GildedRose do
     end
 
     it 'decreases the quality value of backstages passes to 0 when sellin value is less than zero' do
-      items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 0, 10)]
+      items = [Item.new('Backstage passes to a TAFKAL80ETC concert', -1, 10)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(0)
     end
 
-    it 'increases the quality value of Aged Brie by +2, if it has a quality value less than 50 and a sellin less than 0' do
-      items = [Item.new('Aged Brie', 0, 48)]
+    it 'never decreases the Quality Sulfuras, Hand of Ragnaros' do
+      items = [Item.new('Sulfuras, Hand of Ragnaros', 0, 50)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(50)
     end
 
-    it 'degrades the quality value of standard items by 2' do
-      items = [Item.new('foo', 1, 10)]
-      GildedRose.new(items).update_quality
-      expect(items[0].quality).to eq(8)
-    end
 
   end
 end
