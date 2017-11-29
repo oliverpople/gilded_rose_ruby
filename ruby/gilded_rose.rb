@@ -41,7 +41,7 @@ class GildedRose
       add_quality(item, 3)
     elsif item.sell_in < 11
       add_quality(item, 2)
-    elsif item.sell_in < 50
+    elsif 
       add_quality(item)
     end
   end

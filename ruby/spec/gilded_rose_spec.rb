@@ -19,12 +19,12 @@ describe GildedRose do
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(0)
     end
-    
-        it 'doesn\'t allow the item\'s quality value to drop below zero, whilst sell_in is below zero'  do
-          items = [Item.new('foo', -1, 2)]
-          GildedRose.new(items).update_quality
-          expect(items[0].quality).to eq(0)
-        end
+
+    it 'doesn\'t allow the item\'s quality value to drop below zero, whilst sell_in is below zero' do
+      items = [Item.new('foo', -1, 2)]
+      GildedRose.new(items).update_quality
+      expect(items[0].quality).to eq(0)
+    end
 
     it 'degrades the quality value of standard items by 2' do
       items = [Item.new('foo', 1, 10)]
@@ -48,6 +48,12 @@ describe GildedRose do
       items = [Item.new('Aged Brie', 0, 48)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(50)
+    end
+
+    it 'increases the quality value of backstages passes by 1 when the sell in value is more than 10' do
+      items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 12, 20)]
+      GildedRose.new(items).update_quality
+      expect(items[0].quality).to eq(21)
     end
 
     it 'increases the quality value of backstages passes by x2 when there are 10days of less to sellin' do
@@ -74,9 +80,18 @@ describe GildedRose do
       expect(items[0].quality).to eq(50)
     end
 
-
   end
 end
+
+  describe Item do
+    describe '#to_s' do
+        it 'returns a string of the item\'s name, sell_in value, and quality value' do
+          item = Item.new('foo', 10, 10)
+          expect(item.to_s).to eq("foo, 10, 10")
+        end
+    end
+  end
+
 
 # # Requirements to test
 #
