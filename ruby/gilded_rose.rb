@@ -17,8 +17,7 @@ class GildedRose
   def standard_update(item)
     subtract_sell_in(item)
     if item.sell_in < 0 && item.quality >= 4
-      subtract_quality(item)
-      subtract_quality(item)
+      subtract_quality(item, 4)
     elsif item.sell_in < 0 && item.quality >= 2
       subtract_quality(item)
     elsif item.quality >= 2
@@ -39,12 +38,9 @@ class GildedRose
     if item.sell_in < 0
       zero_quality(item)
     elsif item.sell_in < 6
-      add_quality(item)
-      add_quality(item)
-      add_quality(item)
+      add_quality(item, 3)
     elsif item.sell_in < 11
-      add_quality(item)
-      add_quality(item)
+      add_quality(item, 2)
     elsif item.sell_in < 50
       add_quality(item)
     end
@@ -52,12 +48,14 @@ class GildedRose
 
   def sulfuras_update(item); end
 
-  def add_quality(item)
-    item.quality = item.quality + 1
+private
+
+  def add_quality(item, n=1)
+    item.quality = item.quality + n
   end
 
-  def subtract_quality(item)
-    item.quality = item.quality - 2
+  def subtract_quality(item, n=2)
+    item.quality = item.quality - n
   end
 
   def subtract_sell_in(item)

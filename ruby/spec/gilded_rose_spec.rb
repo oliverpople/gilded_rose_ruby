@@ -14,11 +14,17 @@ describe GildedRose do
       expect(items[0].quality).to eq(0)
     end
 
-    it 'doesn\'t allow standard items to have negative quality values' do
+    it 'doesn\'t allow standard items to have negative quality values whilst sell_in is above zero' do
       items = [Item.new('foo', 0, 0)]
       GildedRose.new(items).update_quality
       expect(items[0].quality).to eq(0)
     end
+    
+        it 'doesn\'t allow the item\'s quality value to drop below zero, whilst sell_in is below zero'  do
+          items = [Item.new('foo', -1, 2)]
+          GildedRose.new(items).update_quality
+          expect(items[0].quality).to eq(0)
+        end
 
     it 'degrades the quality value of standard items by 2' do
       items = [Item.new('foo', 1, 10)]
